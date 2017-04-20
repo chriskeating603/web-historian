@@ -49,22 +49,35 @@ exports.isUrlInList = function(url, callback) {
 exports.addUrlToList = function(url, callback) {
   fs.readFile(exports.paths.list, function (err, data){
     if (err) {throw err;}
+
     var urls = data.toString('utf8').split('\n'); 
-    
+
     if (!urls.includes(url)){
-      fs.appendFile(exports.paths.list, url, function(){
-        console.log('file appended!');
-      });
+      //append URL to txt file
+      fs.appendFile(exports.paths.list, url, function(){});
+      //adds to /site directory
+      // fs.writeFile(exports.paths.archivedSites + '/' + url, 'HI');
     }    
 
     callback();
   }); 
+
 };
 
 exports.isUrlArchived = function(url, callback) {
+  callback = callback || function (exists){return exists};
+  var urlTesting = path.join(exports.paths.archivedSites, '/', url);
+  var exists = fs.existsSync(urlTesting);
+  callback(exists);      
 };
 
 exports.downloadUrls = function(urls) {
+  //FOR EACH in urls
+  urls.forEach((url) => {
+    if (!exports.isUrlArchived(url)) {
+      fs.writeFile(exports.paths.archivedSites + '/' + url, 'HI');
+    }
+  })
+    // checkk if archived
+      // if not archived, download it (writeFile)
 };
-  // list: console.log('dirname', __dirname)
-  //list: path.join(__dirname, '../archives/sites.txt')
