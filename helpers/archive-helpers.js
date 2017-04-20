@@ -25,13 +25,40 @@ exports.initialize = function(pathsObj) {
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
+var readFile = (cb) => {
+  fs.readFile(exports.paths.list, function (err, data){
+    if (err) {throw err;}
+    var urls = data.toString('utf8').split('\n'); 
+    cb(urls);
+  });
+};
+
 exports.readListOfUrls = function(callback) {
+  readFile(callback);
 };
 
 exports.isUrlInList = function(url, callback) {
+  fs.readFile(exports.paths.list, function (err, data){
+    if (err) {throw err;}
+    var urls = data.toString('utf8').split('\n'); 
+    var exists = urls.includes(url);
+    callback(exists);
+  }); 
 };
 
 exports.addUrlToList = function(url, callback) {
+  fs.readFile(exports.paths.list, function (err, data){
+    if (err) {throw err;}
+    var urls = data.toString('utf8').split('\n'); 
+    
+    if (!urls.includes(url)){
+      fs.appendFile(exports.paths.list, url, function(){
+        console.log('file appended!');
+      });
+    }    
+
+    callback();
+  }); 
 };
 
 exports.isUrlArchived = function(url, callback) {
@@ -39,3 +66,5 @@ exports.isUrlArchived = function(url, callback) {
 
 exports.downloadUrls = function(urls) {
 };
+  // list: console.log('dirname', __dirname)
+  //list: path.join(__dirname, '../archives/sites.txt')
