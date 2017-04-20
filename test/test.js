@@ -25,9 +25,9 @@ describe('server', function() {
     });
   });
 
-  xdescribe('archived websites', function () {
-    xdescribe('GET', function () {
-      xit('should return the content of a website from the archive', function (done) {
+  describe('archived websites', function () {
+    describe('GET', function () {
+      it('should return the content of a website from the archive', function (done) {
         var fixtureName = 'www.google.com';
         var fixturePath = archive.paths.archivedSites + '/' + fixtureName;
 
@@ -47,13 +47,13 @@ describe('server', function() {
           });
       });
 
-      xit('Should 404 when asked for a nonexistent file', function(done) {
+      it('Should 404 when asked for a nonexistent file', function(done) {
         request.get('/arglebargle').expect(404, done);
       });
     });
 
-    xdescribe('POST', function () {
-      xit('should append submitted sites to \'sites.txt\'', function(done) {
+    describe('POST', function () {
+      it('should append submitted sites to \'sites.txt\'', function(done) {
         var url = 'www.example.com';
 
         // Reset the test file and process request
@@ -145,16 +145,14 @@ describe('archive helpers', function() {
 
   describe('#downloadUrls', function () {
     it('should download all pending urls in the list', function (done) {
-      console.log('archive.paths.archivedSites BEFORE', fs.readdirSync(archive.paths.archivedSites))
       var urlArray = ['www.example.com', 'www.google.com'];
       archive.downloadUrls(urlArray);
 
       // Ugly hack to wait for all downloads to finish.
       setTimeout(function () {
-        console.log('archive.paths.archivedSites', fs.readdirSync(archive.paths.archivedSites))
         expect(fs.readdirSync(archive.paths.archivedSites)).to.deep.equal(urlArray);
         done();
-      }, 500);
+      }, 1000);
     });
   });
 });

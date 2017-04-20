@@ -4,7 +4,11 @@ var archive = require('../helpers/archive-helpers');
 
 exports.handleRequest = function (req, res) {
 
-
+  if (req.method === 'GET'){
+    console.log('went in')
+    req.statusCode = 200;
+    req.writeHead(statusCode, )
+  }
 
   res.end('/<input/');
 };

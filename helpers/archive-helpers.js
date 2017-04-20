@@ -25,24 +25,20 @@ exports.initialize = function(pathsObj) {
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
-var readFile = (cb) => {
+
+exports.readListOfUrls = function(callback) {
   fs.readFile(exports.paths.list, function (err, data){
     if (err) {throw err;}
     var urls = data.toString('utf8').split('\n'); 
-    cb(urls);
+    callback(urls);
   });
-};
-
-exports.readListOfUrls = function(callback) {
-  readFile(callback);
 };
 
 exports.isUrlInList = function(url, callback) {
   fs.readFile(exports.paths.list, function (err, data){
     if (err) {throw err;}
     var urls = data.toString('utf8').split('\n'); 
-    var exists = urls.includes(url);
-    callback(exists);
+    callback(urls.includes(url));
   }); 
 };
 
@@ -53,10 +49,7 @@ exports.addUrlToList = function(url, callback) {
     var urls = data.toString('utf8').split('\n'); 
 
     if (!urls.includes(url)){
-      //append URL to txt file
       fs.appendFile(exports.paths.list, url, function(){});
-      //adds to /site directory
-      // fs.writeFile(exports.paths.archivedSites + '/' + url, 'HI');
     }    
 
     callback();
@@ -72,12 +65,9 @@ exports.isUrlArchived = function(url, callback) {
 };
 
 exports.downloadUrls = function(urls) {
-  //FOR EACH in urls
   urls.forEach((url) => {
     if (!exports.isUrlArchived(url)) {
       fs.writeFile(exports.paths.archivedSites + '/' + url, 'HI');
     }
   })
-    // checkk if archived
-      // if not archived, download it (writeFile)
 };
