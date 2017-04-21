@@ -13,7 +13,8 @@ exports.paths = {
   siteAssets: path.join(__dirname, '../web/public'),
   archivedSites: path.join(__dirname, '../archives/sites'),
   list: path.join(__dirname, '../archives/sites.txt'),
-  indexPage: path.join(__dirname, '../web/public/index.html')
+  indexPage: path.join(__dirname, '../web/public/index.html'),
+  loadingPage: path.join(__dirname, '../web/public/loading.html')
 };
 
 // Used for stubbing paths for tests, do not modify
@@ -62,13 +63,13 @@ exports.isUrlArchived = function(url, callback) {
   callback = callback || function (exists){return exists;};
   var urlTesting = path.join(exports.paths.archivedSites, '/', url);
   var exists = fs.existsSync(urlTesting);
-  callback(exists);      
+  return callback(exists);      
 };
 
 exports.downloadUrls = function(urls) {
   urls.forEach((url) => {
     if (!exports.isUrlArchived(url)) {
-      fs.writeFile(exports.paths.archivedSites + '/' + url, 'HI');
+      fs.writeFile(exports.paths.archivedSites + '/' + url, url);
     }
   });
 };

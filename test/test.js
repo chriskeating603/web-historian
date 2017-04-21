@@ -37,7 +37,7 @@ describe('server', function() {
         fs.closeSync(fd);
 
         // Write data to the file.
-        // fs.writeFileSync(fixturePath, 'google');
+        fs.writeFileSync(fixturePath, 'google');
 
         request
           .get('/' + fixtureName)

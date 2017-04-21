@@ -19,3 +19,15 @@ exports.serveAssets = function(res, asset, callback) {
 
 
 // As you progress, keep thinking about what helper functions you can put here!
+
+//helper function to set status code 
+exports.sendResponse = function (request, callback) {}
+
+//helper function to collect data
+exports.collectData = function (request, callback) {}
+
+//helper function to send 404 status code 
+exports.send404 = function (response) {}
+
+//redirect to pages in POST request
+exports.sendRedirect = function (response, location, status) {}
